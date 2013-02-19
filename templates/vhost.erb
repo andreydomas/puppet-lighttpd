@@ -1,0 +1,19 @@
+<%-
+    def config_value(value)
+        return value.inspect if value.kind_of? String
+        return '%s' % value.inspect.gsub(/\[/, '( ').gsub(/\]/, ' )') if value.kind_of? Array
+        return '%s' % value.inspect.gsub(/\{/, '( ').gsub(/\}/, ' )') if value.kind_of? Hash
+    end
+-%>
+$HTTP["host"] =~ "<%= name -%>" {
+<% config.each_pair { |k, v| %>
+    <%= k %> = <%= config_value v %>
+<% } -%>
+<% rules.each { |rule| %>
+    <%= rule['match'] %> {
+        <%- rule['then'].each_pair { |k, v| -%>
+        <%= k %> = <%= config_value v %>
+    <%- } -%>
+    }
+<% } -%>
+}
