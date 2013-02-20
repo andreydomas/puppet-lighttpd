@@ -9,7 +9,7 @@ lighttpd::vhost { "example":
                 "server.document-root" => "/var/www/example.com",
                 "dir-listing.activate" => "disable",
                 "index-file.names" => [ "index.html" ],
-                "compress.filetype" => [ "text/html", "text/plain", "text/xml",
+                "compress.filetype+" => [ "text/html", "text/plain", "text/xml",
                                          "text/css", "application/x-javascript" ],
                 "alias.url" => {
                     "/images"  => "/var/lib/images",
@@ -36,7 +36,7 @@ $HTTP["host"] =~ "(www\.)?example.com" {
 
     index-file.names = ( "index.html" )
 
-    compress.filetype = ( "text/html", "text/plain", "text/xml", "text/css", "application/x-javascript" )
+    compress.filetype += ( "text/html", "text/plain", "text/xml", "text/css", "application/x-javascript" )
 
     alias.url = ( "/images"  => "/var/lib/images", "/vendor"  => "/usr/share/vendor" )
 

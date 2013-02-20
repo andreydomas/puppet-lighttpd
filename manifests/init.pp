@@ -15,8 +15,6 @@ class lighttpd {
         "/etc/lighttpd/conf-enabled"
     ]: } ->
 
-    Lighttpd::Vhost<||> ~>
-
     service { lighttpd:
         ensure => running
     }

@@ -1,4 +1,9 @@
 <%-
+    def config_key(key)
+        return key[0...-1] + ' += ' if key[-1,1] == '+'
+        return key + ' = '
+    end
+
     def config_value(value)
         return value.inspect if value.kind_of? String
         return '%s' % value.inspect.gsub(/\[/, '( ').gsub(/\]/, ' )') if value.kind_of? Array
@@ -7,12 +12,12 @@
 -%>
 $HTTP["host"] =~ "<%= name -%>" {
 <% config.each_pair { |k, v| %>
-    <%= k %> = <%= config_value v %>
+    <%= config_key k %><%= config_value v %>
 <% } -%>
 <% rules.each { |rule| %>
     <%= rule['match'] %> {
         <%- rule['then'].each_pair { |k, v| -%>
-        <%= k %> = <%= config_value v %>
+        <%= config_key k %><%= config_value v %>
     <%- } -%>
     }
 <% } -%>
